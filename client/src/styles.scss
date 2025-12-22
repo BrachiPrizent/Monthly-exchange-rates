@@ -1,0 +1,30 @@
+html, body {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1f2937;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.p-datatable th {
+  font-weight: 600;
+  background: #f9fafb;
+}
+
+.p-datatable td {
+  font-size: 13px;
+}

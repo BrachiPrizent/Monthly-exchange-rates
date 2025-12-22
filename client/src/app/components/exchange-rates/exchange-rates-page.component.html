@@ -1,0 +1,43 @@
+<div class="graph-buttons">
+    <button class="graph-btn" [routerLink]="['/monthly-graph']">Graphs</button>
+    <button class="graph-btn" [routerLink]="['/monthly-forecast']">Forecast</button>
+</div>
+
+<h2>Monthly exchange rates</h2>
+
+<p-table #dt2 class="exchange-table" [rowHover]="true" [value]="rates" dataKey="_id" [scrollable]="true"
+    scrollHeight="672px" selectionMode="single" [(selection)]="selectedRate">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="year">Year <p-sortIcon field="year"></p-sortIcon></th>
+            <th pSortableColumn="month">Month <p-sortIcon field="month"></p-sortIcon></th>
+            <th pSortableColumn="usd_ils_avg">Usd ils avg<p-sortIcon field="usd_ils_avg"></p-sortIcon></th>
+        </tr>
+        <tr class="filter-row">
+            <th>
+                <input pInputText type="text" placeholder="Search year" (input)="filterColumn($event, 'year')" />
+            </th>
+            <th>
+                <input pInputText type="text" placeholder="Search month" (input)="filterColumn($event, 'month')" />
+            </th>
+            <th>
+                <input pInputText type="text" placeholder="Search rate" (input)="filterColumn($event, 'usd_ils_avg')" />
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rate>
+        <tr [pSelectableRow]="rate" [ngClass]="getRateClass(rate.usd_ils_avg)">
+            <td>{{rate.year}}</td>
+            <td>{{rate.month}}</td>
+            <td>{{rate.usd_ils_avg | number:'1.4-4'}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <tr class="forecast-row">
+            <td colspan="3" class="forecast-cell">
+                Forecast for next month:
+                {{ forecast !== null ? (forecast | number:'1.4-4') : 'Not enough data to calculate forecast.' }}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

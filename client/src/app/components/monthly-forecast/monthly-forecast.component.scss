@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  padding: 2.5rem;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  color: #1e3a8a;
+  letter-spacing: 0.5px;
+}
+
+:host ::ng-deep .p-datatable {
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+:host ::ng-deep .p-datatable-wrapper {
+  border: 2px solid #1e3a8a;
+  border-radius: 14px;
+}
+
+:host ::ng-deep .exchange-table {
+
+  .p-datatable-table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  th,
+  td {
+    text-align: center;
+  }
+
+  .p-datatable-tbody>tr {
+    height: 56px;
+    border-bottom: 2px solid #000;
+  }
+
+  .p-datatable-tbody>tr>td {
+    padding: 0 1rem;
+    vertical-align: middle;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #111827;
+  }
+}
+
+:host ::ng-deep .p-datatable thead th {
+  background: #1e3a8a;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 1rem;
+}
+
+:host ::ng-deep .p-datatable tbody tr {
+  background: #ffffff;
+}
+
+:host ::ng-deep .p-datatable tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+:host ::ng-deep .p-datatable tbody tr.p-highlight {
+  background: #cfd9e6;
+}
+
+:host ::ng-deep .matrix-table {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+:host ::ng-deep .matrix-table .p-datatable-wrapper {
+  overflow-x: auto;
+}
+
+:host ::ng-deep .matrix-table .p-datatable-table {
+  min-width: 1600px;
+  table-layout: fixed;
+}
+
+:host ::ng-deep .matrix-table th,
+:host ::ng-deep .matrix-table td {
+  min-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .matrix-table th,
+:host ::ng-deep .matrix-table td {
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 1.1rem;
+}
+
+.show-matrix-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+:host ::ng-deep .show-matrix-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 1.5rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .show-matrix-btn:hover {
+  background-color: #1e40af;
+  transform: scale(1.05);
+}
