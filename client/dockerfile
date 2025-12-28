@@ -1,0 +1,11 @@
+FROM node:18-alpine AS build-step
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+COPY . .
+RUN npm run build --prod # This command creates the 'dist' folder
+
+FROM nginx:alpine
+COPY --from=build-step /app/dist/client /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

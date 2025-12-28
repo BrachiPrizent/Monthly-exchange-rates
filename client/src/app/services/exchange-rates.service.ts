@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ExchangeRate } from '../models/exchange-rate';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExchangeRatesService {
 
-  private apiUrl = 'http://127.0.0.1:5000/api';
-  private rates$ = new BehaviorSubject<ExchangeRate[]>([]);
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  private apiUrl = environment.apiUrl;
+  private rates$ = new BehaviorSubject<ExchangeRate[]>([]);
 
   getRatesFromApi(): Observable<ExchangeRate[]> {
     return this.http.get<ExchangeRate[]>(`${this.apiUrl}/rates`);

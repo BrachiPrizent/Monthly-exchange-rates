@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ExchangeRatesService } from '../../services/exchange-rates.service';
 import { ExchangeRate } from '../../models/exchange-rate';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './exchange-rates-page.component.html',
   styleUrl: './exchange-rates-page.component.scss',
 })
-export class ExchangeRatesPageComponent {
+export class ExchangeRatesPageComponent implements OnInit {
   @ViewChild('dt2') dt2!: Table;
   rates: ExchangeRate[] = [];
   selectedRate: ExchangeRate | null = null;
@@ -23,14 +23,11 @@ export class ExchangeRatesPageComponent {
   maxRate = 0;
   forecast: number | null = null;
 
-  constructor(private exchangeRatesService: ExchangeRatesService) { }
+  private exchangeRatesService = inject(ExchangeRatesService);
 
   ngOnInit(): void {
-    debugger
     this.exchangeRatesService.getRatesFromApi().subscribe({
       next: data => {
-        debugger
-        console.log('Rates received:', data);
         this.rates = data;
         this.exchangeRatesService.setRates(data);
         this.minRate = Math.min(...data.map(r => r.usd_ils_avg));
@@ -51,7 +48,7 @@ export class ExchangeRatesPageComponent {
 
   filterColumn(event: Event, field: string) {
     const value = (event.target as HTMLInputElement).value;
-     this.dt2?.filter(value.toString(), field, 'contains');
+    this.dt2?.filter(value.toString(), field, 'contains');
   }
 
   calculateForecast() {
@@ -60,17 +57,17 @@ export class ExchangeRatesPageComponent {
     const lastYear = lastRate.year;
     const lastMonth = lastRate.month;
     const previousMonths = [];
-    for(let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 3; i++) {
       let month = lastMonth - i;
       let year = lastYear;
-      if(month <= 0) {
+      if (month <= 0) {
         month += 12;
         year -= 1;
       }
       const rate = this.rates.find(r => r.year === year && r.month === month);
-      if(rate) previousMonths.push(rate.usd_ils_avg);
+      if (rate) previousMonths.push(rate.usd_ils_avg);
     }
-    if(previousMonths.length === 3) {
+    if (previousMonths.length === 3) {
       this.forecast = previousMonths.reduce((a, b) => a + b, 0) / 3;
     } else {
       this.forecast = null;

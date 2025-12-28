@@ -1,8 +1,8 @@
 import os
 from flask import Flask, jsonify
 from flask_cors import CORS
-from pymongo import MongoClient
 from dotenv import load_dotenv
+from pymongo import MongoClient
 
 load_dotenv()
 
@@ -19,4 +19,4 @@ def get_rates():
     return jsonify(rates)
 
 if __name__ == '__main__':
-    app.run(port=os.getenv("PORT"))
+    app.run(host="0.0.0.0", port=os.getenv("PORT"))

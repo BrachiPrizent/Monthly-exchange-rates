@@ -1,0 +1,22 @@
+services:
+  server:
+    build: ./server
+    container_name: python-backend
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  client:
+    build: ./client
+    container_name: angular-frontend
+    depends_on:
+      - server
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

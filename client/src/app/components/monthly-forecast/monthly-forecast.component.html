@@ -26,26 +26,29 @@
 </p-table>
 
 <div class="show-matrix-container">
-    <button pButton [label]="showMatrix ? 'Close Matrix' : 'Show Matrix'" class="show-matrix-btn"
-        (click)="toggleMatrix()"></button>
+    <button pButton class="show-matrix-btn"
+        (click)="toggleMatrix()">{{ showMatrix ? 'Close Matrix' : 'Show Matrix' }}</button>
 </div>
 
-<h2 *ngIf="showMatrix">Matrix Product (Forecast × Difference)</h2>
+<ng-container *ngIf="showMatrix">
+    <h2>Matrix Product (Forecast × Difference)</h2>
+</ng-container>
 
-<p-table *ngIf="showMatrix" class="exchange-table matrix-table" [value]="matrixProduct" [scrollable]="true"
-    scrollHeight="400px">
-    <ng-template pTemplate="header">
-        <tr>
-            <th *ngFor="let col of matrixProduct[0]; let i = index">
-                C{{ i + 1 }}
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
-        <tr>
-            <td *ngFor="let cell of row">
-                {{ cell | number:'1.4-4' }}
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+<ng-container *ngIf="showMatrix">
+    <p-table class="exchange-table matrix-table" [value]="matrixProduct" [scrollable]="true" scrollHeight="400px">
+        <ng-template pTemplate="header">
+            <tr>
+                <ng-container *ngFor="let col of matrixProduct[0]; let i = index">
+                    <th>C{{ i + 1 }}</th>
+                </ng-container>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+            <tr>
+                <ng-container *ngFor="let cell of row">
+                    <td>{{ cell | number:'1.4-4' }}</td>
+                </ng-container>
+            </tr>
+        </ng-template>
+    </p-table>
+</ng-container>

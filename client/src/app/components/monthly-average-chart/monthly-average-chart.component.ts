@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { ExchangeRate } from 'src/app/models/exchange-rate';
 import { NgChartsModule } from 'ng2-charts';
@@ -15,7 +15,7 @@ import { ExchangeRatesService } from 'src/app/services/exchange-rates.service';
 
 export class MonthlyAverageChartComponent implements OnInit {
 
-  constructor(private exchangeRatesService: ExchangeRatesService) {}
+  private exchangeRatesService = inject(ExchangeRatesService);
 
   rates: ExchangeRate[] = [];
 
@@ -51,7 +51,7 @@ export class MonthlyAverageChartComponent implements OnInit {
     });
   }
 
-  private prepareChartData(): void {
+  prepareChartData(): void {
     const sortedRates = [...this.rates]
       .filter(r => r.year >= 2023)
       .sort((a, b) => a.year - b.year || a.month - b.month);
@@ -71,7 +71,7 @@ export class MonthlyAverageChartComponent implements OnInit {
     };
   }
 
-  private getMonthName(monthNumber: number): string {
+  getMonthName(monthNumber: number): string {
     const months = [
       'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'

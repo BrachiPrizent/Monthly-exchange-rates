@@ -15,7 +15,7 @@ def main():
     schedule.every().day.at("01:00").do(lambda: job(collection))
     while True:
         schedule.run_pending()
-        time.sleep(1)
+        time.sleep(60)
 
 if __name__  == "__main__":
     main()

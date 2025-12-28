@@ -1,5 +1,5 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
@@ -28,7 +28,7 @@ export class MonthlyForecastComponent implements OnInit {
   matrixProduct: number[][] = [];
   showMatrix = false;
 
-  constructor(private exchangeRatesService: ExchangeRatesService) { }
+  private exchangeRatesService = inject(ExchangeRatesService);
 
   ngOnInit() {
     this.exchangeRatesService.getRatesFromApi().subscribe(data => {
@@ -69,10 +69,10 @@ export class MonthlyForecastComponent implements OnInit {
     const forecasts = this.forecastRows.map(r => r.forecast).filter(f => f !== null) as number[];
     const differences = this.forecastRows.map(r => r.difference).filter(d => d !== null) as number[];
     this.matrixProduct = [];
-    for (let i = 0; i < forecasts.length; i++) {
+    for (const forecast of forecasts) {
       const row: number[] = [];
-      for (let j = 0; j < differences.length; j++) {
-        row.push(forecasts[i] * differences[j]);
+      for (const diff of differences) {
+        row.push(forecast * diff);
       }
       this.matrixProduct.push(row);
     }
