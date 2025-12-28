@@ -1,0 +1,50 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - feature/monthly-exchange-rates-task
+  pull_request:
+    branches:
+      - feature/monthly-exchange-rates-task
+
+jobs:
+  server-tests:
+    name: Server Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install server dependencies
+        working-directory: server
+        run: pip install -r requirements.txt
+
+      - name: Run server tests
+        working-directory: server
+        run: python -m unittest discover -s tests -p "*.py"
+
+  client-tests:
+    name: Client Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install client dependencies
+        working-directory: client
+        run: npm install
+
+      - name: Run Angular tests
+        working-directory: client
+        run: npx ng test

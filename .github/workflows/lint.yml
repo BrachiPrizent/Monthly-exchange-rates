@@ -1,0 +1,52 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - feature/monthly-exchange-rates-task
+  pull_request:
+    branches:
+      - feature/monthly-exchange-rates-task
+
+jobs:
+  server-lint:
+    name: Server Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install server dependencies
+        working-directory: server
+        run: |
+          pip install -r requirements.txt
+          pip install ruff
+
+      - name: Run Ruff
+        working-directory: server
+        run: ruff check .
+
+  client-lint:
+    name: Client Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install client dependencies
+        working-directory: client
+        run: npm install
+
+      - name: Run ESLint
+        working-directory: client
+        run: npx ng lint
