@@ -1,6 +1,6 @@
 import unittest
-from unittest.mock import MagicMock, patch
 from freezegun import freeze_time
+from unittest.mock import MagicMock, patch
 from src.connecting_to_mongoDB import(
     insert_all_rates,
     insert_monthly_rate,

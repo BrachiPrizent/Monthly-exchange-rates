@@ -1,10 +1,17 @@
 import datetime
+import logging
 import os
 import requests
 import xml.etree.ElementTree as ET
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 API_BASE_URL = os.getenv("API_BASE_URL")
 today = datetime.date.today()
@@ -56,7 +63,7 @@ def insert_all_rates(collection):
         {"year": 2025, "month": 11, "usd_ils_avg": 3.2548},
     ]
     collection.insert_many(rates)
-    print("All the rates have been entered!")
+    logger.info("All the rates have been entered!")
 
 def job(collection):
     today = datetime.datetime.now()
@@ -72,7 +79,7 @@ def insert_monthly_rate(collection):
         'usd_ils_avg': avg
     }
     collection.insert_one(new_month)
-    print("The monthly rate is included!")
+    logger.info("The monthly rate is included!")
 
 def get_last_month():
     today = datetime.datetime.now()
@@ -95,7 +102,7 @@ def get_last_month_usd_ils_avg():
             rates.append(float(value))
     if rates:
         avg_rate = sum(rates) / len(rates)
-        print(f"Average dollar rate for the previous month: {avg_rate}")
+        logger.info(f"Average dollar rate for the previous month: {avg_rate}")
     else:
-        print("No gateways were found in response from the API.")
+        logger.warning("No gateways were found in response from the API.")
     return avg_rate
